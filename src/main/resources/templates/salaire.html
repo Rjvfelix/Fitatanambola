@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Salaires</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{css/bootstrap.min.css}" />
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="row">
+					<h4 th:text="${solde}"></h4>
+				</div>
+				<div class="row">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h5>Saisir salaire</h5>
+						</div>
+						<div class="panel-body">
+							<form th:action="@{saveSalaire}" method="post">
+								<div class="form-group">
+									<label class="control-label">Montant</label> <input
+										class="form-control" type="text" name="montant"
+										th:value="${salaire.montant}" />
+								</div>
+								<div class="form-group">
+									<label class="control-label">Description</label> <input
+										class="form-control" type="text" name="description"
+										th:value="${salaire.description}" />
+								</div>
+								<div>
+									<button class="btn btn-success">Enregistrer</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h5>Saisir depense</h5>
+						</div>
+						<div class="panel-body">
+							<form th:action="@{saveDepense}" method="post">
+								<div class="form-group">
+									<label class="control-label">Montant</label> <input
+										class="form-control" type="text" name="montant"
+										th:value="${depense.montant}" />
+								</div>
+								<div class="form-group">
+									<label class="control-label">Description</label> <input
+										class="form-control" type="text" name="description"
+										th:value="${depense.description}" />
+								</div>
+								<div>
+									<button class="btn btn-success">Enregistrer</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<div class="row">
+					<a th:href="@{index(type='salaire')}" th:class="${type}=='salaire'?'btn btn-default active':'btn btn-default'">Salaire</a>
+					<a th:href="@{index(type='depense')}" th:class="${type}=='depense'?'btn btn-default active':'btn btn-default'">Depense</a>
+				</div>
+				<div class="panel">
+					<div class="panel-heading">
+						<form th:action="@{index}" method="get">
+							<label>Mot clé:</label> 
+							<input type="hidden" name="type" th:value="${type}"/>
+							<input type="text" name="mc"
+								th:value="${mc}" />
+							<button class="btn btn-primary">Chercher</button>
+						</form>
+					</div>
+					<div class="panel-body">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Description</th>
+									<th>Montant</th>
+									<th>Date</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="s:${salaires}">
+									<td th:text="${s.id}"></td>
+									<td th:text="${s.description}"></td>
+									<td th:text="${s.montant}"></td>
+									<td th:text="${s.date}"></td>
+									<!-- <td><a onclick="return confirm('Etes vous sûre?')"
+										th:href="@{delete(id=${s.id},page=${pageCourante},size=${size},mc=${mc}, type=${type})}"
+										class="btn btn-danger">Supprimer</a></td> -->
+								</tr>
+							</tbody>
+						</table>
+						<div>
+							<ul class="nav nav-pills">
+								<li th:class="${pageCourante}==${status.index}?'active':''"
+									th:each="p,status:${pages}"><a
+									th:href="@{index(page=${status.index}, size=${size}, mc=${mc}, type=${type})}"
+									th:text="${status.index}"></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
